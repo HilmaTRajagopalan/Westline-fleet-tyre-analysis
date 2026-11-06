@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Westline Carriers: tyre findings</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--dk:#1f2328;--or:#e8590c;--gr:#5f6b76;--lt:#f1f3f5;--bd:#d0d5da}
+body{font-family:Calibri,Arial,sans-serif;color:var(--dk);max-width:960px;margin:0 auto;padding:32px 20px 80px;line-height:1.5}
+h1{font-family:Cambria,Georgia,serif;font-size:32px;margin:0 0 6px}
+h2{font-family:Cambria,Georgia,serif;font-size:24px;margin:44px 0 10px;padding-top:12px;border-top:1px solid var(--bd)}
+h3{font-size:17px;margin:20px 0 6px}
+.sub{color:var(--gr);margin:0 0 20px}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:14px}
+th{background:var(--dk);color:#fff;text-align:left;padding:8px 10px}
+td{padding:8px 10px;border-bottom:1px solid var(--bd);vertical-align:top}
+tr:nth-child(even) td{background:var(--lt)}
+.box{background:var(--lt);padding:12px 16px;border-radius:6px;margin:12px 0}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:10px;background:var(--or);color:#fff;margin-right:6px}
+.tag.m{background:var(--gr)}
+.meta{font-size:14px;color:var(--gr)}
+.meta b{color:var(--dk)}
+.bar{display:flex;align-items:center;margin:4px 0;font-size:14px}
+.bar span.l{width:200px}
+.bar span.b{height:18px;background:var(--or);display:inline-block;border-radius:2px}
+.bar span.b.neg{background:var(--dk)}
+.bar span.v{margin-left:8px;font-weight:700}
+nav a{margin-right:14px;color:var(--or);text-decoration:none;font-size:14px}
+</style></head><body>
+
+<h1>Westline Carriers: what is happening with the tyres?</h1>
+<p class="sub">TPMS analysis of 6 trucks, 1 Jun to 15 Jul 2026, using the TyreSense exports, tyre register, tread-depth sheets, daily odometer log, inflation standard and the fleet manager interview. Each finding states what was done, what was found, confidence, and what would change my mind. Labels: <span class="tag m">measured</span><span class="tag m">derived</span><span class="tag m">reported</span><span class="tag m">hypothesis</span></p>
+<nav><a href="#sum">Summary</a><a href="#audit">1 Source audit</a><a href="#phys">2 Physics</a><a href="#alarm">3 Alarms</a><a href="#depot">4 Depots</a><a href="#kar">5 Karwar</a><a href="#watch">6 Watch-list</a><a href="#alert">7 Alert design</a><a href="#tread">8 Tread</a><a href="#ghat">9 Ghat</a><a href="#mgr">10 Manager vs data</a><a href="#q">11 Questions</a><a href="#no">12 Cannot answer</a><a href="#dist">13 Distrust</a></nav>
+
+<table>
+<tr><th>Fleet</th><th>Registration</th><th>Run</th><th>Depot</th></tr>
+<tr><td>T1</td><td>KA25AB4471</td><td>Goa (via Anmod ghat)</td><td>Belagavi</td></tr>
+<tr><td>T2</td><td>KA25AC1182</td><td>Karwar</td><td>Belagavi</td></tr>
+<tr><td>T3</td><td>KA22AD7730</td><td>Gadag distribution</td><td>Hubballi</td></tr>
+<tr><td>T4</td><td>KA25AE2016</td><td>Hubballi city</td><td>Hubballi</td></tr>
+<tr><td>T5</td><td>KA48AF9054</td><td>Shivamogga (+ one Mangaluru run)</td><td>Hubballi</td></tr>
+<tr><td>T6</td><td>KA22AG3391</td><td>Vijayapura</td><td>Belagavi</td></tr>
+</table>
+
+<h2 id="sum">0. Summary</h2>
+<div class="box"><b>One sentence.</b> The tyres are mostly fine; the alarms are mostly physics and procedure, the one real failure was visible for almost nine hours, and three Hubballi trucks are run 7-10% under-inflated by the depot's own routine.</div>
+<table>
+<tr><th>#</th><th>Finding</th><th>Confidence</th><th>What would change my mind</th></tr>
+<tr><td>1</td><td>Hubballi trucks (T3, T4, T5) run ~7-10% under the cold standard because the depot fills, and sometimes releases air, on hot tyres in the afternoon. On 4-5 Jun T4 and T3 were bled to ~14-17 PSI under standard when cold. Belagavi fills cold at 06:00 and sits on the card. Leak rates are equal at both depots.</td><td>High</td><td>A depot log showing fills were cold; TPMS reading low only in the afternoon</td></tr>
+<tr><td>2</td><td>The Karwar failure (T2 inner tyre 5RI, 11 Jul) was not a slow leak, but it was visible for 8 h 56 min before the truck stopped. It tracked its twin for six weeks, then lost 6-8 PSI/h from ~03:15. A peer-relative alert fires at ~03:25-03:40; the raw 90%-of-card line was crossed at 06:25. Not foreseeable days ahead; avoidable with an alert that reaches the driver.</td><td>High on timeline, low on cause</td><td>A second failure with a slow precursor; the removed casing's report</td></tr>
+<tr><td>3</td><td>"Fourteen alarms every afternoon" is temperature. Sensor pressure moves ~0.71 PSI per reported C (about 1.9x the gas law), ~14 PSI a day on a typical tyre; common cooling events hit 4-6 trucks in the same 20 minutes (consistent with rain), plus a daily post-descent cool-down on Goa.</td><td>High (thermal), moderate (rain)</td><td>Weather records; the vendor's alert rules</td></tr>
+<tr><td>4</td><td>A short real watch-list: T1 4LI and T3 5RO lose ~10 PSI/month more than truck-mates with fast-draining, drop-prone sensors; T2 3LO has the sensor signature and ~5 PSI/month excess; T5 2RO's sensor is at 1% battery.</td><td>Moderate-high</td><td>Soap test showing valves and beads sound</td></tr>
+<tr><td>5</td><td>Sensor batteries drain ~0.29 pts/day (about 1 year to empty at that rate) against the vendor's "3-4 years"; six weeks cannot establish a discharge curve.</td><td>Low-moderate</td><td>Vendor's discharge curve</td></tr>
+<tr><td>6</td><td>Left tyres wear faster than right on every inspected axle (20/20, median 2.6 mm); on T1 about 2x faster. Whether Hubballi roads eat tyres cannot be answered from the pack.</td><td>High (L/R); none (roads)</td><td>A second inspection of T3/T4 after 5,000 km or more</td></tr>
+<tr><td>7</td><td>Sources: the odometer log is reliable; depot gauge and TPMS agree within ~1 PSI; the Data Dictionary has C/D reversed; the register overwrote the failed tyre; the rotation was on the Goa truck, not Karwar; exports overlap and one has a mistyped registration.</td><td>High</td><td>n/a</td></tr>
+<tr><td>8</td><td>Ghat: Goa's drive-axle tyres reach 67-71 C on every descent with no trend over six weeks; the pack cannot say anything about brake condition.</td><td>Moderate</td><td>Speed and altitude channels from TyreSense</td></tr>
+</table>
+<p><b>First actions.</b> (1) Make the Hubballi routine cold-fill only (before the first run or after 3 h parked) and re-check T3, T4, T5 next morning. (2) Get TyreSense to send per-tyre relative-pressure alerts to the driver's phone and document the alert rules. (3) Inspect T1 4LI, T3 5RO, T2 3LO (valve, bead, sensor seal) and replace the T5 2RO sensor. (4) Book the second tread inspection for T3/T4 and a first for T5/T6.</p>
+<p class="meta"><b>Scope honesty.</b> Six weeks, one failure, no load, weather, speed or alert-rule data. The detector in section 7 is a design with one confirming case, not a validated model.</p>
+
+<h2 id="audit">1. Source audit (done before any analysis)</h2>
+<h3>1a. Exports overlap; one mislabels its vehicle <span class="tag m">measured</span></h3>
+<p>Each June file runs to ~06:00 on 1 Jul and each July file starts at 18:00 on 30 Jun, so 12 hours are present twice (2,869 rows). All overlapping rows are identical, so de-duplicating on (vehicle, time) loses nothing. T1's July file carries <code>KA25B4471</code> on every row (27,082 rows); a join on the Vehicle column would silently drop it, so I key vehicles on the file name. After de-duplication: 556,310 rows.</p>
+<h3>1b. Data-quality facts that shape the method <span class="tag m">measured</span></h3>
+<ul>
+<li>Rows are not evenly spaced: ~18 s while active, ~2 min parked (100% of rows on 0-km days). Every summary uses fixed 5-10 min bins, not row means.</li>
+<li>Receiver clock and GPS time never differ by more than 3 s.</li>
+<li>GPS coverage is poor only on T1 (83%) and T2 (86%) against ~98% elsewhere; gaps are in daytime. This is the likely source of the manager's "map jumps around".</li>
+<li>Sensor dropouts hit ~16% of records, always as a whole sensor (PSI, TEMP and BATT together); baseline ~1.2% per slot.</li>
+<li><code>Avg Battery</code> is the mean of sensors that reported, so it moves when a sensor drops out; not used.</li>
+</ul>
+<h3>1c. The odometer log is the most trustworthy source <span class="tag m">measured</span></h3>
+<p>Opening and closing odometers chain with no breaks, KM Run equals closing minus opening, and GPS distance agrees within 2-6% on every truck (max daily deviation 3.5%). Used as ground truth for "was the truck moving today". Caveat: it is daily, so it cannot say when in the day the truck ran.</p>
+<h3>1d. Position systems <span class="tag m">measured</span></h3>
+<p>C = left and D = right. The Data Dictionary's parentheticals are reversed (it says "C = co-driver side (right)" but also "CF1 = front left"). Tyre serials embed the original side: C matches L in 34 of 34 non-rotated rows, D matches R in 34 of 34. Anyone following the dictionary would flip every left/right tread comparison. The T1 rotation is real and is the Goa truck, not the Karwar truck as the manager guessed: 3LO/3RO carry each other's serials, re-fitted 28 Jun (a Sunday). The register is a 15 Jul snapshot: the failed T2 5RI tyre (serial ...-0242) was overwritten by its replacement (...-0901, 12 Jul).</p>
+<h3>1e. TPMS confirms the register events and finds no others <span class="tag m">measured</span></h3>
+<p>On 28 Jun the batteries of T1's 3LO and 3RO slots exchange values (62 and 87): sensors travelled with the tyres. On 12 Jul T2's 5RI battery jumps 48 to 98: new sensor. No other battery step in six weeks, so no undocumented tyre or sensor change. A slot is a position, not a tyre, so per-tyre histories are rebuilt through serials.</p>
+
+<h2 id="phys">2. Physics first: pressure follows temperature</h2>
+<p>A sealed tyre is nearly constant-volume gas, so pressure rises and falls with gas temperature; a 100 PSI cold tyre reads ~115 PSI after hard running with no air added. A fixed raw-PSI alarm therefore mixes air quantity with temperature. Test: on 0-km days (Sundays) the slope of PSI against sensor C should be ~0.38-0.43 PSI/C.</p>
+<ul>
+<li><span class="tag m">measured</span> 490 parked tyre-days: median slope <b>0.713 PSI/C</b> (IQR 0.690-0.737, median r = 0.97), 1.86x the gas-law value, identical on every axle and truck. The slope does not scale with the pressure level, which a gas-law effect would.</li>
+<li><span class="tag">hypothesis</span> The reported temperature is the valve-stem sensor body, which swings about half as much as the gas inside. Consequence (solid): textbook compensation would under-correct by almost half, so I use the empirical 0.71 PSI/C, referred to 25 C.</li>
+<li><span class="tag m">derived</span> Within-day 5-95% range over 3,780 tyre-days: raw PSI median 13.6 (90th percentile 20.2) against compensated median 1.5 (90th percentile 1.8).</li>
+</ul>
+<p class="meta"><b>Confidence:</b> high on the empirical slope. <b>Would change my mind:</b> the vendor documenting the probe location, or a reference gauge and IR reading on a parked truck.</p>
+
+<h2 id="alarm">3. "Fourteen alarms every afternoon": the Goa truck</h2>
+<p>On a Goa day the truck leaves Belagavi ~06:30, descends the Anmod ghat (drive-axle tyres ~70 C by 08:30 while steer and axles 2-3 stay at 40-50 C), parks in Goa until ~14:45, then all tyres lose 15-20 C in half an hour as it leaves, and pressure falls 10-20 PSI with it. That is a thermal event; pressure recovers as tyres warm on the climb.</p>
+<ul>
+<li><span class="tag m">measured</span> On 10 dates, 4-6 of 6 trucks on different roads show a cooling of 8 C or more in 30 minutes within the same 20-minute window. A puncture cannot do that to six trucks. First events 10-11 Jun match the manager's "rain came early, second week of June".</li>
+<li><span class="tag m">measured</span> Not literally every afternoon: 17 of 45 days (10 of 30 in June) have an all-tyre afternoon cooling event on T1.</li>
+<li><span class="tag">hypothesis</span> Rain as the cause: no weather data in the pack. Residual puzzle: timing agrees to the same 10-minute bin across trucks 100+ km apart, more uniform than real showers; a shared pipeline component cannot be excluded.</li>
+</ul>
+<h3>Which alert rule reproduces the complaint? <span class="tag m">measured</span></h3>
+<table>
+<tr><th>Rule</th><th>Tyre-days alarmed (of 3,780)</th><th>Days with 10+ tyres at once</th></tr>
+<tr><td>A. Fixed low, raw PSI below 90% of card</td><td>1,254 (33%)</td><td>80</td></tr>
+<tr><td>B. Rapid fall, raw PSI down 8 or more in 30 min</td><td>711 (19%)</td><td>30</td></tr>
+<tr><td>C. Fixed low, temperature-referred PSI</td><td>1,420 (38%)</td><td>87</td></tr>
+<tr><td>D. Fast-loss plus peer rule (section 7)</td><td>4 (0.1%)</td><td>0</td></tr>
+</table>
+<p>Rule A is almost silent on T1/T2/T6 (5, 1, 0 tyre-days of 630) and loud only on Hubballi, where it is right (section 4). Rule B produces the manager's picture: Goa has 12 afternoons with 10+ tyres alarming together, more than any other truck, on days when nothing is wrong. Rule C fires on Hubballi's chronic under-inflation almost daily (T3: 41 of 45 days), a procedure defect. The vendor's rules are not in the pack; the claim that he is describing a rapid-fall rule is inference.</p>
+<p class="meta"><b>Confidence:</b> high that these are thermal and common-cause; moderate that rain is the cause. <b>Would change my mind:</b> rainfall records for Belagavi, Hubballi and Goa on 11, 13, 17, 27 Jun and 4, 7, 9, 14 Jul; the vendor's alert rules.</p>
+
+<h2 id="depot">4. How the depots inflate, and why Hubballi "always reads low"</h2>
+<p>The standard is a cold pressure (before running, or after 3 h standing). Filling to the card number while hot leaves the tyre below the card after cooling by about 0.71 x (hot minus 25 C), i.e. 8-17 PSI at 35-50 C. Releasing air from a hot tyre that reads above the card is the same error reversed. Method: detect depot sessions as a temperature-referred step of 3.5 PSI or more within 20 minutes with under 2 C temperature change, cluster per truck, compare readings before and after with the card.</p>
+<table>
+<tr><th></th><th>Belagavi (T1, T2, T6)</th><th>Hubballi (T3, T4, T5)</th></tr>
+<tr><td>When</td><td>~06:00-06:30, tyres 23-27 C</td><td>~15:30-16:00, tyres 34-48 C</td></tr>
+<tr><td>Reading as they stop</td><td>about the card</td><td>about the card</td></tr>
+<tr><td>After cooling to 25 C</td><td>within -1.5 to +1.5 PSI</td><td>6-10 PSI under (fills), 12-17 PSI under (releases)</td></tr>
+</table>
+<div class="box"><b>Median cold pressure minus card, final fortnight (raw readings, 00:00-05:00 at 22-30 C; independent of the temperature coefficient)</b>
+<div class="bar"><span class="l">T1 Goa</span><span class="b" style="width:2px"></span><span class="v">0.0</span></div>
+<div class="bar"><span class="l">T2 Karwar</span><span class="b" style="width:8px"></span><span class="v">+0.4</span></div>
+<div class="bar"><span class="l">T6 Vijayapura</span><span class="b" style="width:2px"></span><span class="v">-0.1</span></div>
+<div class="bar"><span class="l">T3 Gadag</span><span class="b neg" style="width:198px"></span><span class="v">-9.9</span></div>
+<div class="bar"><span class="l">T4 City</span><span class="b neg" style="width:148px"></span><span class="v">-7.4</span></div>
+<div class="bar"><span class="l">T5 Shivamogga</span><span class="b neg" style="width:200px"></span><span class="v">-10.0</span></div></div>
+<ul>
+<li><span class="tag m">measured</span> Hot releases: T4 on 4 Jun and T3 on 5 Jun (~15:50) bled tyres reading 5-7 PSI above the card down to it, taking T3 to ~17 PSI (about 16%) below standard when cold for two weeks, until the hot fill on 19 Jun partly recovered it. T5 shows a smaller one on 8 Jun. The manager did not mention these.</li>
+<li><span class="tag m">measured</span> Gauge vs TPMS: across 188 tyre-sessions the TPMS reading just after filling differs from the card by mean +0.1 PSI (median 0.0, sd 1.2). They agree with each other; a shared absolute offset cannot be excluded.</li>
+<li><span class="tag m">measured</span> Frequency: truck-wide sessions every ~2-5 weeks per truck, not "ten-fifteen days".</li>
+<li><span class="tag m">measured</span> No difference in leakage: median -1.55 PSI/30 d at Hubballi vs -1.36 at Belagavi (Mann-Whitney p = 0.24), inside the manufacturer's ~3 PSI/month allowance. The manager's "Hubballi leaks" is the hot-fill artefact misread.</li>
+<li>The spec sheet itself says visual inspection cannot detect 10-15% under-inflation, and running well under standard overheats the casing and shortens life. Nothing in the tread sheets shows it yet; six weeks is too short.</li>
+</ul>
+<p class="meta"><b>Confidence:</b> high on the hot-fill mechanism (it explains sign, size, timing and the manager's own quoted numbers). <b>Would change my mind:</b> a depot log showing fills were done cold, or TPMS reading low only in the afternoon.</p>
+
+<h2 id="kar">5. The Karwar failure: could it have been foreseen?</h2>
+<p>A twin is the ideal control (same axle, load path, temperature and fill), so the signal is temperature-referred 5RI minus 5RO.</p>
+<table>
+<tr><th>Time (11 Jul)</th><th>What the data shows</th></tr>
+<tr><td>until ~03:15</td><td>5RI tracks its twin within +/-0.5 PSI and is indistinguishable from the other 13 tyres for six weeks (trend -0.011 PSI/day, p = 0.49; leak -0.06 vs fleet -0.05 PSI/day)</td></tr>
+<tr><td>03:07</td><td>Truck leaves Karwar yard (GPS)</td></tr>
+<tr><td>~03:15-03:20</td><td>5RI starts losing ~6-8 PSI/h; gap to twin -10.2 PSI after 30 min</td></tr>
+<tr><td>03:25</td><td>Gap to twin ~-5 PSI; a relative alert can fire here (the notebook rule fires at 03:40)</td></tr>
+<tr><td>06:25 / 07:15</td><td>Raw 5RI crosses 90 / 85 PSI; a fixed threshold only fires now, among the day's thermal alarms</td></tr>
+<tr><td>12:16</td><td>Truck stops on the road shoulder for 3 h 52 min near Kittur (5RI ~40 PSI, -60%)</td></tr>
+<tr><td>14:19</td><td>Last 5RI reading, 15 PSI</td></tr>
+</table>
+<ul>
+<li><span class="tag m">measured</span> Not foreseeable days ahead: no precursor in pressure, temperature or leak rate. With one failure the pack is silent, not negative, on whether precursors exist for others.</li>
+<li><span class="tag m">derived</span> Avoidable: 8 h 56 min between first deviation and the stop (11 h to sensor death). An inner twin cannot be seen from outside, which is why the driver found nothing when he stopped twice.</li>
+<li>Mechanism unknown: fast leak from departure (puncture, valve or bead are candidates).</li>
+<li><span class="tag">hypothesis</span> Tread mismatch: on 30 Jun 5RI was 15.9 mm vs twin 5RO 12.0 mm (3.9 mm); every other of 20 twin pairs is within ~1 mm (next largest +0.57). Both rows read identically at all three gauge points, which no other tyre shows, so either careless entry or the gauge not applied across the tread. n = 1.</li>
+</ul>
+<p class="meta"><b>Confidence:</b> high on timeline and on no slow precursor in 40 days; low on mechanism. <b>Would change my mind:</b> a second failure with a slow precursor; the casing report; the tyre's mount and retread history.</p>
+
+<h2 id="watch">6. "Which tyre will let me down?" A watch-list</h2>
+<p>Two routes: a tyre loses air much faster than its truck-mates, or its sensor is dying. Both use temperature-referred pressure, compare each tyre with the rest of its own truck, handle the T1 swap and ignore single-tyre top-ups.</p>
+<table>
+<tr><th>Tyre</th><th>Signal</th><th>Action</th></tr>
+<tr><td>T1 4LI</td><td>~-9.9 PSI/30 d vs truck-mates; battery ~2.5x fleet drain; dropouts ~3x; single top-up 4 Jul, drifting down again</td><td>Inspect valve, bead, sensor seal</td></tr>
+<tr><td>T3 5RO</td><td>~-9.6 PSI/30 d vs truck-mates; ~14 PSI under card on top of hot fills; same battery and dropout signature</td><td>Inspect valve, bead, sensor seal</td></tr>
+<tr><td>T2 3LO</td><td>~-5.1 PSI/30 d excess; battery and dropout signature</td><td>Inspect at next service</td></tr>
+<tr><td>T5 2RO</td><td>Sensor at 1% battery; dropouts 2.9% of records, ~6% by July</td><td>Replace sensor</td></tr>
+</table>
+<p><span class="tag m">measured</span> Fleet median battery drain is -0.29 pts/day (84 sensors), about 344 days from full to empty, against the vendor's "3-4 years". Six weeks of a linear fit cannot establish a discharge curve. TPMS alone cannot tell whether the tyre or the valve/sensor leaks; a soap test separates them.</p>
+<p class="meta"><b>Confidence:</b> high that these tyres deviate from neighbours; moderate on monthly rates (short window, top-ups interrupt the series).</p>
+
+<h2 id="alert">7. A better alert, and an honest test of it</h2>
+<ul>
+<li><b>Fast-loss rule:</b> a tyre 4 PSI or more below its own previous 6 hours and 4 PSI or more worse than the truck's median tyre change, sustained 30 minutes.</li>
+<li><b>Slow-leak rule:</b> nightly gap-to-truck-median falling faster than 6 PSI/month (2x the allowance).</li>
+</ul>
+<p><span class="tag m">measured</span> Backtest over 45 days x 84 tyres: the fast-loss rule fires 4 times. It fires on T2 5RI at 03:40 on 11 Jul (~8.5 h before the roadside stop) and three more times on the afternoons depots released air from hot tyres (T3 5 Jun, T5 8 Jun): real pressure losses caused by people, suppressible by recognising a truck-wide depot session or by fixing the cold-fill rule.</p>
+<p><b>Limits.</b> I chose thresholds after seeing this failure and the noise, so the near-zero alert count is partly tuned. One failure, one truck, six weeks: no detection rate or false-alarm rate can be quoted. "One day's notice" is not available for sudden failures (hours); for slow leaks it is (weeks at the measured rates).</p>
+
+<h2 id="tread">8. Tread depth</h2>
+<p>Tread loss needs the same tyre measured twice, the km in between, and a gauge finer than the change. The pack has two inspections for T1, one each for T2, T3, T4, none for T5, T6.</p>
+<ul>
+<li><span class="tag m">measured</span> Right tyres are deeper than left on 20 of 20 axle comparisons (median +2.6 mm). On T1 (5,074 km between inspections) left tyres lost ~0.15 mm per 1,000 km vs ~0.08 on the right. The asymmetry is fleet-wide, not one tyre. A road-edge or camber explanation fits left-hand traffic but cannot be tested here (<span class="tag">hypothesis</span>).</li>
+<li><span class="tag m">measured</span> No inflation wear pattern yet: shoulder minus centre tread sd 0.11 mm, max 0.25 mm, against 0.1 mm gauge resolution. T3, ~15% under for weeks, shows nothing. Do not read this as "under-inflation is harmless".</li>
+<li>T1 wear is slow (0.07-0.16 mm per 1,000 km), limited to about +/-30% by gauge and +/-1 day of km. At ~146 km/day, tyres at ~10-14 mm have well over a year of tread.</li>
+<li><b>"Are Hubballi roads eating my tyres?" cannot be answered:</b> no Hubballi truck has two inspections; tyre ages, brands and fitting dates differ; km before fitting is unknown. Pressure leakage is the wrong instrument.</li>
+</ul>
+
+<h2 id="ghat">9. The ghat and braking</h2>
+<ul>
+<li><span class="tag m">measured</span> Goa drive-axle tyres hit ~67-71 C around 08:30 on every Anmod descent (mean 69.2 C, range 67.3-70.9) while steer and axles 2-3 stay ~42-50 C; raw pressure peaks at ~130 PSI.</li>
+<li><span class="tag m">measured</span> No upward trend: -0.8 C per 30 days (p = 0.19, n = 19). The driver's "pedal going soft" is a feel that a stem-temperature trace cannot test.</li>
+<li>T2 runs hotter than T1 on alternate days (mean 75 C vs 69 C) and cooler on the others (52 C). The failure day was a cool day (peak 55 C), so heat is not an obvious cause of the failure.</li>
+<li>Not available: descent speed, gear, pedal pressure, load. The manager says the box records speed and altitude, but they are not exported.</li>
+</ul>
+
+<h2 id="mgr">10. The manager's account against the data</h2>
+<table>
+<tr><th>What he said</th><th>Verdict</th><th>Evidence</th></tr>
+<tr><td>Hubballi fills in the afternoon, Belagavi at six</td><td>Confirmed (Hubballi later than he said)</td><td>Belagavi ~06:00-06:30; Hubballi ~15:30-16:00 (s4)</td></tr>
+<tr><td>Hubballi leaks more because of bad roads</td><td>Not supported</td><td>Cold gap explained by hot fills; leak rates equal (p = 0.24)</td></tr>
+<tr><td>Gauge probably fine, never compared</td><td>Agrees with TPMS within ~1 PSI</td><td>188 sessions: mean +0.1, sd 1.2</td></tr>
+<tr><td>Each truck done once in 10-15 days</td><td>Overstated</td><td>Truck-wide sessions every ~2-5 weeks</td></tr>
+<tr><td>Goa alerts every afternoon, all fourteen at once</td><td>Partly</td><td>10 of 30 June days (17 of 45); thermal</td></tr>
+<tr><td>Rain came early, second week of June</td><td>Consistent on start date; "dry Belagavi" untestable</td><td>First synchronous cooling 10-11 Jun</td></tr>
+<tr><td>Swapped a pair on the Goa truck, "no wait, maybe Karwar"</td><td>Goa truck (T1), Sunday 28 Jun</td><td>Register, inspection sheet and a battery swap agree</td></tr>
+<tr><td>Inspector: Goa twice, others once, never Mangaluru or Vijayapura</td><td>Confirmed</td><td>T1 x2; T2-T4 x1; T5, T6 none</td></tr>
+<tr><td>One blew on the Karwar road, nobody saw it coming</td><td>Nobody did; the sensor did</td><td>Loss visible from ~03:15, 8 h 56 min before the stop</td></tr>
+<tr><td>Heavy on one side; "by two o'clock it was finished"</td><td>Consistent</td><td>Last reading 14:19</td></tr>
+<tr><td>Batteries 3-4 years, TyreSense says normal</td><td>Not supported by the rate, not disproved</td><td>~0.29 pts/day; four sensors 2-3x worse; T5 2RO at 1%</td></tr>
+<tr><td>Km log most honest; GPS unknown</td><td>Both right</td><td>Log chains and matches GPS within 2-6%; jumps from T1/T2 GPS holes</td></tr>
+<tr><td>Goa brakes going soft at the bottom of Anmod</td><td>Untestable</td><td>No brake or speed data; no temperature trend</td></tr>
+<tr><td>Shivamogga truck did one Mangaluru run in early July</td><td>Confirmed</td><td>GPS south of 13.3 N on 5-6 Jul; 391 km on 6 Jul</td></tr>
+<tr><td>Goa truck three times a week down the ghat</td><td>Confirmed</td><td>278-km days are Tue/Thu/Sat; 19 in 45 days</td></tr>
+</table>
+
+<h2 id="q">11. Five questions for Mr Vijayan, in order of importance</h2>
+<ol>
+<li><b>At Hubballi, exactly when and on what reading do staff add or release air, and do they ever release air from a hot tyre reading above the card?</b> Why: hot fills and two hot releases leave T3/T4/T5 7-17 PSI under standard when cold. Action: if confirmed, replace the routine with cold-only fills, re-check the three trucks next morning, and drop the "Hubballi leaks" idea.</li>
+<li><b>What alert rules and thresholds did TyreSense configure, who receives them, and did anyone get an alert on the Karwar truck between 03:15 and 12:00 on 11 July?</b> Why: the pack has no alert rules; this separates "alert never existed" from "ignored in thermal noise". Action: route a single-tyre relative-pressure alert to the driver.</li>
+<li><b>For failed tyre ...5RI-0242: when was it fitted, new or retread, which brand, and what did the casing show?</b> Why: the register overwrote it and the inspection shows a 3.9 mm mismatch with identical readings. Action: decide on a twin-matching rule and re-measure other twins.</li>
+<li><b>What does each truck carry by direction (empty, part, full)?</b> Why: the card is for rated axle load; heat, pressure need and the Goa/Karwar difference cannot be separated from load. Action: add a three-level load tick to the daily km log.</li>
+<li><b>Can the inspector re-inspect all six trucks at 5,000 km or more intervals, and have any tyres been rotated or replaced since 15 July?</b> Why: only T1 has a wear rate. Action: a second set on T3/T4 and a first on T5/T6 answers the Hubballi roads question with data.</li>
+</ol>
+
+<h2 id="no">12. What this pack cannot answer</h2>
+<ul>
+<li>Whether Hubballi roads wear tyres faster (one inspection per Hubballi truck).</li>
+<li>What the vendor's alerts do (rules not provided; statements are inference).</li>
+<li>Whether the sensor temperature is gas or stem temperature (hypothesis only).</li>
+<li>Load, speed, altitude, brake state, weather (not recorded or not exported).</li>
+<li>Why 5RI failed, and whether failures generally have a slow precursor (one failure).</li>
+<li>Whether the depot gauge is accurate in absolute terms (it agrees with TPMS, but both could share an offset; a calibrated reference gauge would settle it).</li>
+<li>Sensor battery life (six weeks of a roughly linear fit).</li>
+<li>Financial impact, fleet-wide prevalence, events during sensor sleep or missing exports, and whether a tyre was truly cold at each reading.</li>
+</ul>
+
+<h2 id="dist">13. Distrust inventory</h2>
+<table>
+<tr><th>#</th><th>Item</th><th>Why it matters</th><th>What I did</th></tr>
+<tr><td>1</td><td>June/July exports overlap by 12 h (2,869 duplicate rows)</td><td>Double-counting at the boundary</td><td>Verified 100% identical; de-duplicated on (vehicle, time)</td></tr>
+<tr><td>2</td><td>T1's July file labels every row KA25B4471 (27,082 rows)</td><td>A join on Vehicle drops T1's July</td><td>Keyed on file name</td></tr>
+<tr><td>3</td><td>Data Dictionary reverses C/D sides</td><td>Flips every left/right tread comparison</td><td>Resolved with tyre-serial L/R (34/34 each) and the manager: C = left, D = right</td></tr>
+<tr><td>4</td><td>Register is a 15 Jul snapshot; failed tyre's record overwritten</td><td>Lost history of the one tyre that matters</td><td>Noted; added to question 3</td></tr>
+<tr><td>5</td><td>Slot is not a tyre: T1 3LO/3RO swapped on 28 Jun</td><td>Per-slot trends change tyre mid-series</td><td>Detected via battery swap; battery per sensor; serials for wear</td></tr>
+<tr><td>6</td><td>Raw PSI is not comparable with the cold spec and swings ~14 PSI/day</td><td>Fixed alarms mix air loss with heat</td><td>Referred all pressures to 25 C with 0.71 PSI/C</td></tr>
+<tr><td>7</td><td>Sensor temperature responds ~1.9x less than a gas would</td><td>Textbook compensation under-corrects by about half</td><td>Calibrated on 0-km days</td></tr>
+<tr><td>8</td><td>Rows unevenly spaced (18 s moving, 2 min parked)</td><td>Row averages over-weight driving</td><td>Fixed 5-10 min bins</td></tr>
+<tr><td>9</td><td>GPS missing ~15% on T1/T2 (daytime)</td><td>Distance from GPS, "map jumps"</td><td>Jump filter; odometer for distance</td></tr>
+<tr><td>10</td><td>Avg Battery is the mean of sensors that reported</td><td>Moves when a sensor drops out</td><td>Not used; per-slot battery</td></tr>
+<tr><td>11</td><td>GPS Time is in IST, within 3 s of receiver time (true GPS time is UTC)</td><td>Vendor converted it; low risk</td><td>Verified consistent</td></tr>
+<tr><td>12</td><td>Thin inspection coverage: T5, T6 never; T2/T3/T4 once; T1 twice</td><td>No wear rate except T1</td><td>Used only what is defensible</td></tr>
+<tr><td>13</td><td>T2 5RI/5RO identical at all three gauge points (15.9, 12.0)</td><td>Possible careless entry on the failed tyre</td><td>Flagged; 3.9 mm mismatch treated as a question</td></tr>
+<tr><td>14</td><td>Spec card is one set of pressures "regardless of make" at rated axle load; no load records</td><td>May not fit actual loads (e.g. empty Goa returns)</td><td>Used as given; question 4</td></tr>
+<tr><td>15</td><td>Policy vs practice: spec says weekly calibrated checks; manager says 10-15 days; data says 2-5 weeks</td><td>Procedure not followed</td><td>Reported in s4 and s10</td></tr>
+<tr><td>16</td><td>Manager's account has memory errors (rotation truck, frequency, "Hubballi leaks", "every afternoon")</td><td>Single informant</td><td>Checked each against the data (s10)</td></tr>
+<tr><td>17</td><td>Brief says the failure came with "no warning"</td><td>Data show 8 h 56 min of warning</td><td>Section 5</td></tr>
+<tr><td>18</td><td>Cooling events in the same 10-minute bin across trucks 100+ km apart</td><td>Real showers are patchier; possible shared pipeline component</td><td>Reported as consistent with a regional front, not proven</td></tr>
+</table>
+
+<h2>14. Method notes: beliefs I had to drop</h2>
+<ul>
+<li>"T6 is over-inflated by ~10 PSI": an artefact of raw (hot) medians; referred to 25 C, T6 sits on the card.</li>
+<li>"A fixed 90% low threshold explains the Goa afternoon alarms": false; that rule is silent on Goa, a rapid-fall rule reproduces them.</li>
+<li>"The T3/T4 step down on 5-6 Jun is a sensor glitch": it is a hot release at 15:30-16:10, the opposite of a fill, at the same hour as the fills.</li>
+<li>"Leak rates differ by depot": they do not (p = 0.24); the outliers are individual tyres.</li>
+<li>"The textbook gas law will compensate temperature": it under-corrects by about half for this sensor.</li>
+<li>I did not treat the vendor's thresholds as known, the weather as known, or the TPMS temperature as the gas temperature.</li>
+</ul>
+</body></html>
